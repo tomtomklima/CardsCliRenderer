@@ -168,7 +168,7 @@ namespace CardsCliRenderer
 				}
 			},
 		};
-
+			
 		//aces is pictures on 5x4 canvas
 		Dictionary<char, string[]> acesImages = new Dictionary<char, string[]> { {'S', new string[] {
 					"  ʌ  ",
@@ -197,13 +197,38 @@ namespace CardsCliRenderer
 			},
 		};
 
-
-		public void Render (string cards)
+		public void Render (string[] userInput)
 		{
-			//parse and sanitize data
-			char suit = Char.ToUpper (cards [0]);
-			string value = cards.Substring (1).ToUpper ();
+			List<char[,]> cards = new List<char[,]> ();
 
+			//parse and sanitize data from user
+			foreach (string userInputCard in userInput) {
+				char suit = Char.ToUpper (userInputCard [0]);
+				string value = userInputCard.Substring (1).ToUpper ();
+
+				cards.Add (OneCardImage (suit, value));
+			}
+
+			char[,] preparedCardsLine = new char[cards.Count * (WIDTH + 1), HEIGHT];
+			//for a line of cards ready for render
+
+			//TODO optimalize
+			for (int row = 0; row < HEIGHT; row++) {
+				for (int countCards = 0; countCards < cards.Count; countCards++) {
+					//add column of spaces before each card
+					preparedCardsLine [((countCards) * (WIDTH + 1)), row] = ' ';
+
+					for (int column = 0; column < WIDTH; column++) {
+						preparedCardsLine [1 + column + countCards * (WIDTH + 1), row] = cards [countCards] [column, row];
+					}
+				}
+			}
+
+			RenderIntoCli (preparedCardsLine);
+		}
+
+		private char[,] OneCardImage (char suit, string value)
+		{
 			//start with space characters
 			char[,] card = new char[WIDTH, HEIGHT];
 			for (int y = 0; y < HEIGHT; y++) {
@@ -211,7 +236,7 @@ namespace CardsCliRenderer
 					card [x, y] = ' ';
 				}
 			}
-				
+
 			//top and bottom edge, than left and right
 			for (int i = 1; i < WIDTH - 1; i++) {
 				card [i, 0] = '_';
@@ -234,7 +259,7 @@ namespace CardsCliRenderer
 				string[] aceImage = acesImages [suit];
 				for (int y = 0; y < aceImage.Length; y++) {
 					for (int x = 0; x < aceImage [y].Length; x++) {
-						card [x + 1, y + 1] = aceImage [x] [y];
+						card [x + 1, y + 1] = aceImage [y] [x];
 					}
 				}
 
@@ -259,7 +284,7 @@ namespace CardsCliRenderer
 				throw new DataMisalignedException ("Second character must be either number from 2 to 10 or one of the characters J, Q, K or A");
 			}
 
-			//render value, then upside-down value
+			//render value and upside-down value
 			for (int i = 0; i < value.Length; i++) {
 				card [WIDTH - 1 - value.Length + i, HEIGHT - 1] = valueUpsideDown [value] [i];
 			}
@@ -267,10 +292,15 @@ namespace CardsCliRenderer
 				card [1 + i, 1] = value [i];
 			}
 
+			return card;
+		}
+
+		private void RenderIntoCli (char[,] output)
+		{
 			//output one card into console
-			for (int y = 0; y < HEIGHT; y++) {
-				for (int x = 0; x < WIDTH; x++) {
-					Console.Write (card [x, y]);
+			for (int row = 0; row < output.GetLength (1); row++) {
+				for (int column = 0; column < output.GetLength (0); column++) {
+					Console.Write (output [column, row]);
 				}
 				Console.WriteLine ();
 			}
