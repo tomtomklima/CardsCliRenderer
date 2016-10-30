@@ -13,11 +13,36 @@ namespace CardsCliRenderer
 
 	public class CardsCliRenderer
 	{
-		const int WIDTH = 7;
-		const int HEIGHT = 6;
+		private const int WIDTH = 7;
+		private const int HEIGHT = 6;
+
+		//list of all suits for test rendering
+		private List<char> allSuits = new List<char> {
+			{ 'S' },
+			{ 'H' },
+			{ 'C' },
+			{ 'D' },
+		};
+
+		//list of all values for test rendering
+		private List<string> allValues = new List<string> {
+			{ "A" },
+			{ "2" },
+			{ "3" },
+			{ "4" },
+			{ "5" },
+			{ "6" },
+			{ "7" },
+			{ "8" },
+			{ "9" },
+			{ "10" },
+			{ "J" },
+			{ "Q" },
+			{ "K" },
+		};
 
 		//pretty suits
-		Dictionary <char, char> suits = new Dictionary <char, char> {
+		private Dictionary <char, char> suitSymbols = new Dictionary <char, char> {
 			{ 'S', '♠' }, //Spades
 			{ 'H', '♡' }, //Hearths
 			{ 'C', '♣' }, //Clubs
@@ -25,7 +50,7 @@ namespace CardsCliRenderer
 		};
 
 		//upside down values
-		Dictionary <string, string> valueUpsideDown = new Dictionary <string, string> {
+		private Dictionary <string, string> valueUpsideDown = new Dictionary <string, string> {
 			{ "2", "Z" },
 			{ "3", "E" },
 			{ "4", "h" },
@@ -42,7 +67,7 @@ namespace CardsCliRenderer
 		};
 
 		//points for suits in numeric values
-		Dictionary <string, List<Coordinates>> numericFigurePoints = new Dictionary <string, List<Coordinates>> { {"2", new List<Coordinates> {
+		private Dictionary <string, List<Coordinates>> numericFigurePoints = new Dictionary <string, List<Coordinates>> { {"2", new List<Coordinates> {
 					new Coordinates{ x = 3, y = 2 },
 					new Coordinates{ x = 3, y = 4 },
 				}
@@ -119,7 +144,7 @@ namespace CardsCliRenderer
 
 		//figures is picture of person on 4x5 canvas + figure of suit in size of [3 3 2]
 		//strings is here because visibility of images directly in code
-		Dictionary<string, string[]> figuresImages = new Dictionary<string, string[]> { {"J", new string[] {
+		private Dictionary<string, string[]> figuresImages = new Dictionary<string, string[]> { {"J", new string[] {
 					"  w",
 					" {)",
 					" %%",
@@ -146,7 +171,7 @@ namespace CardsCliRenderer
 			},
 		};
 
-		Dictionary<char, string[]> smallSuitsImages = new Dictionary<char, string[]> { {'S', new string[] {
+		private Dictionary<char, string[]> smallSuitsImages = new Dictionary<char, string[]> { {'S', new string[] {
 					" ʌ ",
 					"(:)",
 					" |",
@@ -170,7 +195,7 @@ namespace CardsCliRenderer
 		};
 			
 		//aces is pictures on 5x4 canvas
-		Dictionary<char, string[]> acesImages = new Dictionary<char, string[]> { {'S', new string[] {
+		private Dictionary<char, string[]> acesImages = new Dictionary<char, string[]> { {'S', new string[] {
 					"  ʌ  ",
 					" /:\\ ",
 					"(_:_)",
@@ -196,6 +221,25 @@ namespace CardsCliRenderer
 				}
 			},
 		};
+
+		public void TestRender (int numberOfCards)
+		{
+			if (numberOfCards < 0) {
+				throw new Exception ("Number of testing cards should be not negative number");
+			}
+
+			string[] testCards = new string[numberOfCards];
+
+			Random rnd = new Random ();
+
+			for (int count = 0; count < numberOfCards; count++) {
+				int randomSuit = rnd.Next (allSuits.Count);
+				int randomValue = rnd.Next (allValues.Count);
+				testCards [count] = allSuits [randomSuit] + allValues [randomValue];
+			}
+
+			Render (testCards);
+		}
 
 		public void Render (string[] userInput)
 		{
@@ -252,7 +296,7 @@ namespace CardsCliRenderer
 			if (int.TryParse (value, out output)) {
 				List<Coordinates> valueFigure = numericFigurePoints [value];
 				foreach (Coordinates point in valueFigure) {
-					card [point.x, point.y] = suits [suit];
+					card [point.x, point.y] = suitSymbols [suit];
 				}
 
 			} else if (value == "A") {
