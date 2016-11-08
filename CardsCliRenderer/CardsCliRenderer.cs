@@ -2,17 +2,14 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace CardsCliRenderer
-{
-	public struct Coordinates
-	{
+namespace CardsCliRenderer {
+	public struct Coordinates {
 		public int x { get; set; }
 
 		public int y { get; set; }
 	}
 
-	public class CardsCliRenderer
-	{
+	public class CardsCliRenderer {
 		private const int WIDTH = 7;
 		private const int HEIGHT = 6;
 
@@ -222,8 +219,32 @@ namespace CardsCliRenderer
 			},
 		};
 
-		public void TestRender (int numberOfCards)
-		{
+		private string[] cardBackImage = new string[] {
+			" _____ ",
+			"|\\\\V//|",
+			"|\\\\V//|",
+			"|>>X<<|",
+			"|//A\\\\|",
+			"|//A\\\\|",
+		};
+
+		public void CardBacksRender (int numberOfCards) {
+			char[,] preparedCardsLine = new char[numberOfCards * (WIDTH + 1), HEIGHT];
+
+			for (int row = 0; row < HEIGHT; row++) {
+				for (int block = 0; block < numberOfCards; block++) {
+					//add space before each card block and desired block
+					preparedCardsLine [(block * (WIDTH + 1)), row] = ' ';
+					for (int column = 0; column < WIDTH; column++) {
+						preparedCardsLine [1 + column + (WIDTH + 1) * (block), row] = cardBackImage [row] [column];
+					}
+				}
+			}
+
+			RenderIntoCli (preparedCardsLine);
+		}
+
+		public void TestRender (int numberOfCards) {
 			if (numberOfCards < 0) {
 				throw new Exception ("Number of testing cards should be not negative number");
 			}
@@ -241,8 +262,7 @@ namespace CardsCliRenderer
 			Render (testCards);
 		}
 
-		public void Render (string[] userInput)
-		{
+		public void Render (string[] userInput) {
 			List<char[,]> cards = new List<char[,]> ();
 
 			//parse and sanitize data from user
@@ -271,8 +291,7 @@ namespace CardsCliRenderer
 			RenderIntoCli (preparedCardsLine);
 		}
 
-		private char[,] OneCardImage (char suit, string value)
-		{
+		private char[,] OneCardImage (char suit, string value) {
 			//start with space characters
 			char[,] card = new char[WIDTH, HEIGHT];
 			for (int y = 0; y < HEIGHT; y++) {
@@ -339,8 +358,7 @@ namespace CardsCliRenderer
 			return card;
 		}
 
-		private void RenderIntoCli (char[,] output)
-		{
+		private void RenderIntoCli (char[,] output) {
 			//output one card into console
 			for (int row = 0; row < output.GetLength (1); row++) {
 				for (int column = 0; column < output.GetLength (0); column++) {

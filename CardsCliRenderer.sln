@@ -1,7 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardsCliRenderer", "CardsCliRenderer\CardsCliRenderer.csproj", "{702827AD-5734-44A9-BC64-890A2135A266}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardsCliRenderer", "CardsCliRenderer\CardsCliRenderer.csproj", "{95331739-8339-4E6B-8301-A9B62702E205}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{367CBAFF-B802-4A6B-80A9-EECA3E1B7A98}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,9 +14,11 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{702827AD-5734-44A9-BC64-890A2135A266}.Debug|x86.ActiveCfg = Debug|x86
-		{702827AD-5734-44A9-BC64-890A2135A266}.Debug|x86.Build.0 = Debug|x86
-		{702827AD-5734-44A9-BC64-890A2135A266}.Release|x86.ActiveCfg = Release|x86
-		{702827AD-5734-44A9-BC64-890A2135A266}.Release|x86.Build.0 = Release|x86
+		{95331739-8339-4E6B-8301-A9B62702E205}.Debug|x86.ActiveCfg = Debug|x86
+		{95331739-8339-4E6B-8301-A9B62702E205}.Debug|x86.Build.0 = Debug|x86
+		{95331739-8339-4E6B-8301-A9B62702E205}.Release|x86.ActiveCfg = Release|x86
+		{95331739-8339-4E6B-8301-A9B62702E205}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal
