@@ -64,7 +64,8 @@ namespace CardsCliRenderer {
 		};
 
 		//points for suits in numeric values
-		private Dictionary <string, List<Coordinates>> numericFigurePoints = new Dictionary <string, List<Coordinates>> { {"2", new List<Coordinates> {
+		private Dictionary <string, List<Coordinates>> numericFigurePoints = new Dictionary <string, List<Coordinates>> { 
+			{"2", new List<Coordinates> {
 					new Coordinates{ x = 3, y = 2 },
 					new Coordinates{ x = 3, y = 4 },
 				}
@@ -260,6 +261,10 @@ namespace CardsCliRenderer {
 			}
 
 			Render (testCards);
+		}
+
+		public void Render(List<string> userInput) {
+			Render (userInput.ToArray ());
 		}
 
 		public void Render (string[] userInput) {

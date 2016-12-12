@@ -5,12 +5,14 @@ Library in c# rendering standard poker cards in command interface
 Just copy class CardsCliRenderer into your project
 
 ## Usage
-Usage is simple - create class and call render function with array of desired cards in strings: 
+Usage is simple - create class and call render function with string[] or List<string> of desired cards: 
 ```
 CardsCliRenderer renderer = new CardsCliRenderer();
 
 //print jack of diamonds, two of hearths, ten of clubs and ace of spades
-string[] arrayOfCards = {"DJ", "H2", "C10", "SA"};
+string[] arrayOfCards = {"DJ", "H2", "C10", "SA"}; 
+//or List<string> arrayOfCards = new List<string> {"DJ", "H2", "C10", "SA"};
+
 renderer.Render (arrayOfCards);
 ```
 You can test this class by calling the TestRender function with number of cards: 
